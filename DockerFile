@@ -1,7 +1,7 @@
 FROM maven:3.8.7 as build
-COPY. .
-RUN mvn -B clean package DskipTests
+COPY . .
+RUN mvn -B clean package -DskipTests
 
-FROM openjdk:17
-COPY --from=build/target/*.jar "-new_dev_ops_assignment_ayomide_-_marvelous".jar
-ENTRYPOINT ["java", "-jar", "-Derver.pgitort =8080", "-new_dev_ops_assignment_ayomide_-_marvelous"]
+FROM openjdk:21
+COPY --from=build target/*.jar devops_assignment.jar
+ENTRYPOINT ["java","-jar","-Dserver.port=8080","devops_assignment.jar"]
